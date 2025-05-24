@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SpotifyiOS
 
 @main
-struct BeanifyApp: App {
+struct Main: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+        LoginView()
         }
     }
 }
