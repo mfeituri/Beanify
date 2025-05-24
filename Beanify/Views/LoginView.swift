@@ -8,20 +8,28 @@
 import Foundation
 import SwiftUI
 
-
 struct LoginView: View {
     @State var viewModel = LoginViewModel()
     var body: some View {
-        Button(action: viewModel.startLogin){
-            Text("Sign in with Spotify")
+        VStack{
+            Button(action: viewModel.startLogin){
+                Text("Sign in with Spotify")
+            }
+            .buttonStyle(.borderedProminent)
+            
+            
+            
+            
+            
         }
-        
     }
-    
     
     
 }
 #Preview {
-    LoginView()
+    NavigationStack{
+        LoginView()
+    }
 }
+
 
