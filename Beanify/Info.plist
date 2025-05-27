@@ -8,10 +8,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.yourcompany.beanify</string>
+			<string>com.mfeituri.beanify</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Beanify</string>
+				<string>beanify</string>
 			</array>
 		</dict>
 	</array>

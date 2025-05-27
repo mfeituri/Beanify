@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LoginView: View {
+    @State var isShowingSafari = false
     @State var viewModel = LoginViewModel()
     var body: some View {
         VStack{
@@ -16,14 +17,16 @@ struct LoginView: View {
                 Text("Sign in with Spotify")
             }
             .buttonStyle(.borderedProminent)
-            
-            
-            
-            
-            
+            .sheet(isPresented: Binding(
+                get: {viewModel.authURL != nil},
+                set: { if !$0 { viewModel.authURL = nil } }
+            )){
+                if let url = viewModel.authURL{
+                    SafariView(url: url)
+                }
+            }
         }
     }
-    
     
 }
 #Preview {

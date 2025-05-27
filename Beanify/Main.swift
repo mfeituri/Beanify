@@ -11,8 +11,10 @@ import SpotifyiOS
 @main
 struct Main: App {
     var body: some Scene {
+        @State var viewModel = LoginView()
         WindowGroup {
-        LoginView()
+            LoginView()
+            
         }
     }
 }

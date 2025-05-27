@@ -261,6 +261,9 @@
 			);
 			mainGroup = B358C5972DDBB4B20006FF1C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B34DB23C2DE61ABC004FB589 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B358C5A12DDBB4B20006FF1C /* Products */;
 			projectDirPath = "";
@@ -630,6 +633,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B34DB23C2DE61ABC004FB589 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = B358C5982DDBB4B20006FF1C /* Project object */;
 }
