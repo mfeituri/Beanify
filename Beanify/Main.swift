@@ -10,10 +10,16 @@ import SpotifyiOS
 
 @main
 struct Main: App {
+    @StateObject var viewModel = LoginViewModel()
+    
     var body: some Scene {
-        @State var viewModel = LoginView()
         WindowGroup {
-            LoginView()
+            RootView()
+                .environmentObject(viewModel)
+                .onOpenURL{
+                    url in
+                    viewModel.handleRedirect(url)
+                }
             
         }
     }

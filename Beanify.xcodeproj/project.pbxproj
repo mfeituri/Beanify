@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B3958DC62DE61D5600FC5B56 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = B3958DC52DE61D5600FC5B56 /* KeychainAccess */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B358C5AE2DDBB4B30006FF1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -43,6 +47,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B3418A262E6A62B700AFBC75 /* Exceptions for "Beanify" folder in "BeanifyUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config.plist,
+				Config.swift,
+			);
+			target = B358C5B62DDBB4B30006FF1C /* BeanifyUITests */;
+		};
+		B3418A632E6B50AB00AFBC75 /* Exceptions for "Beanify" folder in "BeanifyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config.swift,
+			);
+			target = B358C5AC2DDBB4B30006FF1C /* BeanifyTests */;
+		};
 		B34DB21C2DDFA54A004FB589 /* Exceptions for "Frameworks" folder in "Beanify" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -94,6 +113,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				B34DB2202DDFA7B5004FB589 /* Exceptions for "Beanify" folder in "Beanify" target */,
+				B3418A632E6B50AB00AFBC75 /* Exceptions for "Beanify" folder in "BeanifyTests" target */,
+				B3418A262E6A62B700AFBC75 /* Exceptions for "Beanify" folder in "BeanifyUITests" target */,
 			);
 			path = Beanify;
 			sourceTree = "<group>";
@@ -115,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3958DC62DE61D5600FC5B56 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +199,7 @@
 			);
 			name = Beanify;
 			packageProductDependencies = (
+				B3958DC52DE61D5600FC5B56 /* KeychainAccess */,
 			);
 			productName = Beanify;
 			productReference = B358C5A02DDBB4B20006FF1C /* Beanify.app */;
@@ -236,6 +259,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
@@ -482,9 +508,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfeituri.Beanify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Beanify-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -513,9 +542,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfeituri.Beanify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Beanify-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -644,6 +675,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B3958DC52DE61D5600FC5B56 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B34DB23C2DE61ABC004FB589 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B358C5982DDBB4B20006FF1C /* Project object */;
 }

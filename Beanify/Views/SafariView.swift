@@ -22,5 +22,5 @@ struct SafariView: UIViewControllerRepresentable{
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
     }
-  
+    
 }

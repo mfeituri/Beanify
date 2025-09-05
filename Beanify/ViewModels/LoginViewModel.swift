@@ -9,10 +9,16 @@ import Foundation
 import SwiftUI
 import CryptoKit
 import SafariServices
-import keychainAcess
+import KeychainAccess
+
+
 
 class LoginViewModel: ObservableObject{
     @Published var authURL: URL?
+    @Published var isLoggedIn: Bool = false
+    
+    
+    let keychain = Keychain(service: "com.mfeituri.beanify")
     
     //function for creating a code verifier
     func generateRandomString(length: Int) -> String{
@@ -59,7 +65,7 @@ class LoginViewModel: ObservableObject{
         components.path = "/authorize"
         
         components.queryItems = [
-            URLQueryItem(name: "client_id", value: "84732e28239e4718a087c2cc6e32d01f"),
+            URLQueryItem(name: "client_id", value: Config.spotifyClientID),
             URLQueryItem(name: "response_type", value:"code"),
             URLQueryItem(name: "redirect_uri", value: "beanify://callback"),
             URLQueryItem(name: "scope", value:"user-top-read user-read-recently-played user-read-email user-read-private"),
@@ -68,9 +74,9 @@ class LoginViewModel: ObservableObject{
         ]
         if let url = components.url{
             self.authURL = url
-            let config = SFSafariViewController.Configuration()
             
-            let viewComponent = SFSafariViewController(url: url, configuration: config)
+            
+          
            
             
         } else {
@@ -83,7 +89,7 @@ class LoginViewModel: ObservableObject{
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         if let code = components?.queryItems?.first(where: {$0.name == "code"})?.value{
-            print(code)
+            
             
             exchangeCodeForToken(code: code)
         }
@@ -109,7 +115,7 @@ class LoginViewModel: ObservableObject{
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let bodyParams = [
-            "client_id": "84732e28239e4718a087c2cc6e32d01f",
+            "client_id": "\(Config.spotifyClientID)",
             "grant_type": "authorization_code",
             "code": code,
             "redirect_uri": "beanify://callback",
@@ -138,8 +144,12 @@ class LoginViewModel: ObservableObject{
             do {
                 let tokenResponse = try JSONDecoder().decode(SpotifyTokenResponse.self, from: data)
                 DispatchQueue.main.async {
-                    print("Access Token:", tokenResponse.access_token)
-                    UserDefaults.standard.set(tokenResponse.access_token, forKey: "access_token")
+                    do{
+                        try self.keychain.set(tokenResponse.access_token, key: "access_token")
+                    } catch {
+                        print("failed to save access token to keychain", error)
+                    }
+                    self.fetchUserProfile()
 
                 }
             } catch {
@@ -147,6 +157,47 @@ class LoginViewModel: ObservableObject{
                 print(String(data: data, encoding: .utf8) ?? "Raw response not printable")
             }
         }.resume()
+    }
+    
+    func fetchUserProfile() {
+        guard let token = try? keychain.get("access_token") else {
+            print("no token in keychain")
+            return
+            
+        }
+            guard let url = URL(string: "https://api.spotify.com/v1/me") else {
+            print("no user access token or invalid url")
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            if let error = error {
+                print("API error:", error)
+                return
+            }
+            guard let data = data else {
+                print("no data recieved")
+                return
+            }
+            
+            do {
+                let profile = try JSONDecoder().decode(SpotifyUserProfile.self, from: data)
+                DispatchQueue.main.async {
+                    print("Logged in as:", profile.displayName ?? profile.id)
+                    self.isLoggedIn = true
+                    self.authURL = nil
+                    
+                }
+            } catch {
+                print("Failed to decode profile", error)
+                print(String(data: data, encoding: .utf8) ?? "raw response not printable")
+            }
+        } .resume()
+        
     }
 
     

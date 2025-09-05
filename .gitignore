@@ -1,0 +1,28 @@
+# Xcode
+.DS_Store
+DerivedData/
+build/
+xcuserdata/
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Config files (keep local secrets out of git)
+Beanify/Config.plist
+
+# User-specific stuff
+*.swp
+*.xcuserstate
