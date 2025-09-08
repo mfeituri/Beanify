@@ -13,15 +13,16 @@ struct LoginView: View {
     @EnvironmentObject var viewModel: LoginViewModel // use this since im going to pass to multiple views
     var body: some View {
         ZStack{
-            RadialGradient(colors: [.green, .purple], center: .center, startRadius: 200, endRadius: 400)
+            LinearGradient(colors: [.green, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             VStack{
                 Text("Beanify")
-                    .font(
-                        .largeTitle
-                            .bold()
-                    )
+                    .font(.largeTitle)
+                    .bold()
                     .foregroundColor(.purple)
+                    
+                
+                
                 VStack{
                     Image("kitty")
                         .resizable()
@@ -39,8 +40,24 @@ struct LoginView: View {
                     
                     Button(action: viewModel.startLogin){
                         Text("Sign in with Spotify")
+                            .bold()
+                            .foregroundColor(.white)
+                            
                     }
-                    .buttonStyle(.borderedProminent)
+                    
+                    .frame(height:50)
+                    .frame(maxWidth: .infinity)
+                    
+                    
+                    .background(
+                        
+                        LinearGradient(colors: [.indigo, .mint], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .cornerRadius(20)
+                    .padding()
+                    
+                    
+                    
                     .sheet(isPresented: Binding(
                         get: {viewModel.authURL != nil},
                         set: { if !$0 { viewModel.authURL = nil } }

@@ -13,7 +13,7 @@ struct RootView: View {
         
         if viewModel.isLoggedIn{
             NavigationStack{
-                DashboardView()
+                TabNavigationView()
             }
         } else {
             LoginView()

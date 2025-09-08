@@ -29,12 +29,13 @@ struct TabNavigationView: View{
                 .tabItem{
                     Label("Profile", systemImage: "person")
                 }
-            AiView()
-                .tabItem{
-                    Label("Ai?", systemImage: "face.smiling")
-                }
+                
+           
         }
-//        .tabViewStyle(.page(indexDisplayMode: .always))
+        .toolbarBackground(.black, for: .tabBar)
+        //        .tabViewStyle(.page(indexDisplayMode: .always))
+        
+        
     }
 }
 

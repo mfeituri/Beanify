@@ -15,35 +15,40 @@ struct DashboardView: View{
     
     var body: some View{
         ZStack{
-            LinearGradient(colors: [.green, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors:
+                            [.green, .purple],
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+          
+           
             ScrollView{
-                VStack{
+                LazyVStack{
                     GroupBox{
-                        ScrollView{
-                            TopArtistsWidget(artists: viewModel.topArtists)
-                                .padding()
-                        }
+                        
+                        TopArtistsWidget(artists: viewModel.topArtists)
+                            .padding()
                         
                     }
-                    HStack{
-                        GroupBox{
-                            ScrollView{
-                                TopTracksWidget(tracks: viewModel.topTracks)
-                                    .padding()
-                                   
-                                
-                            }
-                        }
+                    GroupBox{
+                        TopTracksWidget(tracks: viewModel.topTracks)
+                            .padding()
                     }
+                    
                 }
-                .task {
-                    await viewModel.fetchArtistData()
-                    await viewModel.fetchTrackData()
-                }
+                
             }
+            
+            .task {
+                await viewModel.fetchArtistData()
+                await viewModel.fetchTrackData()
+            }
+            .padding(.top, 0.2)
+            .padding(.bottom,0.2)
         }
+        
     }
 }
+
 
 
 #Preview {
