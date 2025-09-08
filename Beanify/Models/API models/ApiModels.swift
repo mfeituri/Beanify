@@ -11,10 +11,8 @@ struct TopArtistResponse: Codable{
 struct TopTracksResponse: Codable {
     let items: [Tracks]
 }
-struct ExternalUrl: Codable, Identifiable{
+struct ExternalUrl: Codable{
     let spotify: String
-    let id: String
-    let name: String
     
 }
 struct Followers: Codable{
@@ -58,7 +56,6 @@ struct Tracks: Codable, Identifiable {
     let id: String
     let name: String
     let album: Album
-    let artist: [ArtistSimplified]
-    
+    let artists: [ArtistSimplified]
     
 }

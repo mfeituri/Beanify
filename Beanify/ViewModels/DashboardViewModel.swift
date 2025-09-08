@@ -18,9 +18,7 @@ class DashboardViewModel: ObservableObject{
     func fetchArtistData() async {
         do{
             let artists = try await apiService.getTopArtists()
-            DispatchQueue.main.async{
                 self.topArtists = artists
-            }
             
             } catch {
                 print("error fetching artists: \(error)")
@@ -30,9 +28,8 @@ class DashboardViewModel: ObservableObject{
     func fetchTrackData() async {
         do{
             let tracks = try await apiService.getTopTracks()
-            DispatchQueue.main.async{
                 self.topTracks = tracks
-            }
+            
         } catch {
             print("error fetching tracks: \(error)")
             

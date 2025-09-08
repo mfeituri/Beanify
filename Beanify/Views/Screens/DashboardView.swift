@@ -14,31 +14,34 @@ struct DashboardView: View{
     @StateObject private var viewModel = DashboardViewModel()
     
     var body: some View{
-        VStack{
-            GroupBox{
-                ScrollView{
-                    TopArtistsWidget(artists: viewModel.topArtists)
-                }
-                .frame(width: 200 , height: 200)
-                .padding(.horizontal)
-                .padding(.vertical)
-                
-            }
-            HStack{
-                GroupBox{
-                    
-                    ScrollView{
-                        TopArtistsWidget(artists: viewModel.topArtists)
-                            .frame(width: 200, height: 200)
-                            .padding(.horizontal)
-                            .scaledToFit()
+        ZStack{
+            LinearGradient(colors: [.green, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
+            ScrollView{
+                VStack{
+                    GroupBox{
+                        ScrollView{
+                            TopArtistsWidget(artists: viewModel.topArtists)
+                                .padding()
+                        }
+                        
                     }
+                    HStack{
+                        GroupBox{
+                            ScrollView{
+                                TopTracksWidget(tracks: viewModel.topTracks)
+                                    .padding()
+                                   
+                                
+                            }
+                        }
+                    }
+                }
+                .task {
+                    await viewModel.fetchArtistData()
+                    await viewModel.fetchTrackData()
                 }
             }
         }
-        
-        
-        
     }
 }
 
