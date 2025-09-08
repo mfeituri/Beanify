@@ -7,6 +7,10 @@
 struct TopArtistResponse: Codable{
     let items: [Artist]
 }
+
+struct TopTracksResponse: Codable {
+    let items: [Tracks]
+}
 struct ExternalUrl: Codable, Identifiable{
     let spotify: String
     let id: String
@@ -35,10 +39,26 @@ struct Artist: Codable, Identifiable {
         images.max(by: {$0.height > $1.height})?.url //better than sorting since it will do it on the first pass
     }
     
-    struct Tracks: Codable, Identifiable {
-        let id: String
-        let name: String
+}
+
+//dont want to use the same struct as top artists since its not the same structure
+struct ArtistSimplified: Codable, Identifiable{
+    let id: String
+    let name: String
+}
+
+struct Album: Codable{
+    let name: String
+    let images: [SpotifyImage]
+}
+
+
+//identifiable makes it easier when writing foreach loops so i dont need an id for each, it does it on its own
+struct Tracks: Codable, Identifiable {
+    let id: String
+    let name: String
+    let album: Album
+    let artist: [ArtistSimplified]
     
-    }
     
 }

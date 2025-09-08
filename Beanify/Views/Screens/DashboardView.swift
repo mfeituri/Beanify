@@ -11,20 +11,37 @@ import SwiftUI
 
 
 struct DashboardView: View{
-@StateObject private var viewModel = DashboardViewModel()
+    @StateObject private var viewModel = DashboardViewModel()
     
     var body: some View{
-        List(viewModel.topArtists){ artist in
-            Text(artist.name)
+        VStack{
+            GroupBox{
+                ScrollView{
+                    TopArtistsWidget(artists: viewModel.topArtists)
+                }
+                .frame(width: 200 , height: 200)
+                .padding(.horizontal)
+                .padding(.vertical)
                 
-            
+            }
+            HStack{
+                GroupBox{
+                    
+                    ScrollView{
+                        TopArtistsWidget(artists: viewModel.topArtists)
+                            .frame(width: 200, height: 200)
+                            .padding(.horizontal)
+                            .scaledToFit()
+                    }
+                }
+            }
         }
-        .task{
-            await viewModel.fetchArtistData()
-        }
+        
+        
         
     }
 }
+
 
 #Preview {
     DashboardView()

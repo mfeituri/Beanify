@@ -7,6 +7,8 @@
 import Foundation
 import KeychainAccess
 
+
+// enum for the timeranges needed to get the data from api
 enum TimeRange: String{
     case shortTerm = "short_term"
     case mediumTerm = "medium_term"
@@ -23,16 +25,16 @@ class SpotifyAPIService { // swift ui classes are shared by reference, so we wan
         let keychain = Keychain(service: "com.mfeituri.beanify")
         return keychain["access_token"]
     }
-   
-    }
+    
+}
 
 extension SpotifyAPIService{
-    func getTopArtists(timerange: TimeRange = .mediumTerm, limit: Int = 25 ) async throws -> [Artist] {
-       //these are the url components
+    func getTopArtists(timeRange: TimeRange = .mediumTerm, limit: Int = 25 ) async throws -> [Artist] {
+        //these are the url components
         
         var components = URLComponents(string: "\(baseUrl)/me/top/artists")
         components?.queryItems = [
-            URLQueryItem(name: "time_range", value: timerange.rawValue),
+            URLQueryItem(name: "time_range", value: timeRange.rawValue),
             URLQueryItem(name: "limit", value: "\(limit)")
         ]
         
@@ -68,7 +70,52 @@ extension SpotifyAPIService{
     
 }
 
+// api request for getting top tracks
 extension SpotifyAPIService{
-    func getTopTracks() async throws -> [Tracks]
+    // these are the params required to send to the server
+    func getTopTracks(timeRange: TimeRange = .mediumTerm, limit: Int = 25)  async throws -> [Tracks]{
+        // need to form the url string off base string, URL components helps alot with this
+        var components =
+        URLComponents(string: "\(baseUrl)/me/top/tracks")
+        
+        components?.queryItems = [
+            URLQueryItem(name: "time_range", value: timeRange.rawValue),
+            URLQueryItem(name: "limit", value: "\(limit)")
+        ]
+        
+        // make sure we have a valid url
+        guard let url = components?.url else {
+            throw URLError(.badURL)
+        }
+        
+        //make the request method
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        
+        // need to authorize our token with spotify servers
+        if let token = getTokenAcess(){
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            throw URLError(.userAuthenticationRequired)
+        }
+        
+        let (data, response) = try await
+        URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200
+        else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let topTracksResponse = try
+        JSONDecoder()
+            .decode(TopTracksResponse.self, from: data)
+        
+        let tracks = topTracksResponse.items
+        
+        return tracks
+    }
     
 }

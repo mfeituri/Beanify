@@ -12,6 +12,7 @@ import SwiftUI
 @MainActor
 class DashboardViewModel: ObservableObject{
     @Published var topArtists: [Artist] = []
+    @Published var topTracks: [Tracks] = []
     private let apiService = SpotifyAPIService()
     
     func fetchArtistData() async {
@@ -25,6 +26,18 @@ class DashboardViewModel: ObservableObject{
                 print("error fetching artists: \(error)")
             }
         }
+    
+    func fetchTrackData() async {
+        do{
+            let tracks = try await apiService.getTopTracks()
+            DispatchQueue.main.async{
+                self.topTracks = tracks
+            }
+        } catch {
+            print("error fetching tracks: \(error)")
+            
+        }
+    }
     }
     
 
