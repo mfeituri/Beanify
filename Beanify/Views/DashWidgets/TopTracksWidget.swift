@@ -15,19 +15,28 @@ struct TopTracksWidget: View{
             Text("Top Tracks")
                 .font(.headline)
                 .padding(.bottom, 4)
-            ForEach(tracks) { track in
-                HStack{
-                    Text(track.name)
+            ForEach(Array(tracks.enumerated()), id: \.offset) { index, track in
+                VStack(alignment: .center, spacing: 8){
+                    Text("\(index + 1)")
+                        .font(.headline)
                         .foregroundColor(.white)
                         .font(.subheadline)
                         .padding(.leading, 8)
+                        .frame(width: 24, alignment: .trailing)
+                    VStack(alignment: .leading, spacing: 2){
+                        Text(track.name)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                    }
                     
                     Text(track.artists.map{$0.name}.joined(separator: ", "))
                         .foregroundColor(.gray)
                         .font(.subheadline)
                         .padding(.leading, 4)
                 }
+                Spacer()
             }
+            .padding(.vertical, 4)
         }
     }
 }

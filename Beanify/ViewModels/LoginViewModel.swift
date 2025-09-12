@@ -75,16 +75,10 @@ class LoginViewModel: ObservableObject{
         if let url = components.url{
             self.authURL = url
             
-            
-          
-           
-            
         } else {
             print("invalid url")
         }
     }
-    
-    
     func handleRedirect( _ url: URL){
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
@@ -150,7 +144,6 @@ class LoginViewModel: ObservableObject{
                         print("failed to save access token to keychain", error)
                     }
                     self.fetchUserProfile()
-
                 }
             } catch {
                 print("Failed to decode token response:", error)
@@ -165,7 +158,7 @@ class LoginViewModel: ObservableObject{
             return
             
         }
-            guard let url = URL(string: "https://api.spotify.com/v1/me") else {
+        guard let url = URL(string: "https://api.spotify.com/v1/me") else {
             print("no user access token or invalid url")
             return
         }
@@ -199,6 +192,6 @@ class LoginViewModel: ObservableObject{
         } .resume()
         
     }
-
+    
     
 }

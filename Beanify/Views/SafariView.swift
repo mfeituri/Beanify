@@ -5,6 +5,8 @@
 //  Created by Mohamed Feituri on 5/26/25.
 //
 
+
+// this screen displays the auth screen with spotify directly inside app so it doesnt take users out
 // wrappable to help with presenting the auth screen inside my app
 // wraps uikit in swift ui
 import Foundation

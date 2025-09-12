@@ -7,6 +7,7 @@
 
 import Foundation
 
+// this file is to hide the client key and abstract it from the rest of the code so it cant be read
 enum Config {
     static var spotifyClientID: String {
         guard

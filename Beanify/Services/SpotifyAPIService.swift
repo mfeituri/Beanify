@@ -4,6 +4,8 @@
 //
 //  Created by Mohamed Feituri on 9/4/25.
 //
+
+// this is file is basically how we communicate with spotifys apis. it has the network requests for the various types of data
 import Foundation
 import KeychainAccess
 

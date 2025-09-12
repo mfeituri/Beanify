@@ -60,15 +60,15 @@
 		B3418A262E6A62B700AFBC75 /* Exceptions for "Beanify" folder in "BeanifyUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Config.plist,
-				Config.swift,
+				Configuration/Config.plist,
+				Configuration/Config.swift,
 			);
 			target = B358C5B62DDBB4B30006FF1C /* BeanifyUITests */;
 		};
 		B3418A632E6B50AB00AFBC75 /* Exceptions for "Beanify" folder in "BeanifyTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Config.swift,
+				Configuration/Config.swift,
 			);
 			target = B358C5AC2DDBB4B30006FF1C /* BeanifyTests */;
 		};

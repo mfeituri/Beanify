@@ -19,25 +19,26 @@ struct DashboardView: View{
                             [.green, .purple],
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
-          
-           
             ScrollView{
-                LazyVStack{
+                HStack{
                     GroupBox{
+                        ScrollView{
+                            TopArtistsWidget(artists: viewModel.topArtists)
+                                .padding()
+                        }
                         
-                        TopArtistsWidget(artists: viewModel.topArtists)
-                            .padding()
                         
                     }
                     GroupBox{
-                        TopTracksWidget(tracks: viewModel.topTracks)
-                            .padding()
+                        ScrollView{
+                            TopTracksWidget(tracks: viewModel.topTracks)
+                                .padding()
+                        }
                     }
-                    
                 }
                 
             }
-            
+            //load the data from spotify api
             .task {
                 await viewModel.fetchArtistData()
                 await viewModel.fetchTrackData()
