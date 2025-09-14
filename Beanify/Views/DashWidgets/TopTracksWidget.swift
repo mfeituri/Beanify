@@ -13,16 +13,18 @@ struct TopTracksWidget: View{
         
         VStack{
             Text("Top Tracks")
+                .frame(alignment: .center)
                 .font(.headline)
                 .padding(.bottom, 4)
             ForEach(Array(tracks.enumerated()), id: \.offset) { index, track in
                 VStack(alignment: .center, spacing: 8){
                     Text("\(index + 1)")
+                        .lineLimit(1)
                         .font(.headline)
                         .foregroundColor(.white)
                         .font(.subheadline)
                         .padding(.leading, 8)
-                        .frame(width: 24, alignment: .trailing)
+                        .frame(width: 30, alignment: .center)
                     VStack(alignment: .leading, spacing: 2){
                         Text(track.name)
                             .font(.subheadline)
@@ -33,6 +35,7 @@ struct TopTracksWidget: View{
                         .foregroundColor(.gray)
                         .font(.subheadline)
                         .padding(.leading, 4)
+                        .frame(alignment: .center)
                 }
                 Spacer()
             }

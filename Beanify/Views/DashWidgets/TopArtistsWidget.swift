@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct TopArtistsWidget: View{
+struct TopArtistsWidget: View {
    let artists: [Artist]
     
     var body: some View{
         VStack(alignment: .leading) {
             Text("Top Artists")
+                .frame(alignment: .center)
                 .font(.headline)
                 .padding(.bottom, 4)
             ForEach(artists) { artist in

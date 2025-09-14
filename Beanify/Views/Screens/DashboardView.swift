@@ -19,36 +19,63 @@ struct DashboardView: View{
                             [.green, .purple],
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
+            
             ScrollView{
-                HStack{
-                    GroupBox{
-                        ScrollView{
-                            TopArtistsWidget(artists: viewModel.topArtists)
-                                .padding()
+                VStack{
+                    HStack{
+                        Spacer()
+                        Text("I want to see the last")
+                            .foregroundColor(.black)
+                            .font(.headline)
+                        Picker("Time Frame", selection: $viewModel.selectedTerm){
+                            Text("4 Weeks").tag(TimeRange.shortTerm)
+                            Text("6 Months").tag(TimeRange.mediumTerm)
+                            Text("Year").tag(TimeRange.longTerm)
+                        }
+                        .frame(alignment: .center)
+                        .pickerStyle(.wheel)
+                        .foregroundColor(.black)
+                        // change load new data once we change selection
+                        .onChange(of: viewModel.selectedTerm){
+                            newTerm in
+                            Task{
+                                await viewModel.fetchArtistData()
+                                await viewModel.fetchTrackData()
+                            }
                         }
                         
-                        
                     }
-                    GroupBox{
-                        ScrollView{
-                            TopTracksWidget(tracks: viewModel.topTracks)
-                                .padding()
+                    HStack{
+                        GroupBox{
+                            ScrollView{
+                                TopArtistsWidget(artists: viewModel.topArtists)
+                                    .padding()
+                            }
+                            
+                            
+                        }
+                        GroupBox{
+                            ScrollView{
+                                TopTracksWidget(tracks: viewModel.topTracks)
+                                    .padding()
+                            }
                         }
                     }
+                    
                 }
-                
             }
-            //load the data from spotify api
-            .task {
-                await viewModel.fetchArtistData()
-                await viewModel.fetchTrackData()
+            
+                //load the data from spotify api
+                .task {
+                    await viewModel.fetchArtistData()
+                    await viewModel.fetchTrackData()
+                }
+                .padding(.top, 0.2)
+                .padding(.bottom,0.2)
             }
-            .padding(.top, 0.2)
-            .padding(.bottom,0.2)
+            
         }
-        
     }
-}
 
 
 

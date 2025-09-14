@@ -13,11 +13,13 @@ import SwiftUI
 class DashboardViewModel: ObservableObject{
     @Published var topArtists: [Artist] = []
     @Published var topTracks: [Tracks] = []
+    @Published var selectedTerm: TimeRange = TimeRange.shortTerm
+
     private let apiService = SpotifyAPIService()
     
     func fetchArtistData() async {
         do{
-            let artists = try await apiService.getTopArtists()
+            let artists = try await apiService.getTopArtists(timeRange: selectedTerm)
                 self.topArtists = artists
             
             } catch {
@@ -27,7 +29,7 @@ class DashboardViewModel: ObservableObject{
     
     func fetchTrackData() async {
         do{
-            let tracks = try await apiService.getTopTracks()
+            let tracks = try await apiService.getTopTracks(timeRange: selectedTerm)
                 self.topTracks = tracks
             
         } catch {

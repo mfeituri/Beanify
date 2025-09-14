@@ -8,14 +8,10 @@
 // this is file is basically how we communicate with spotifys apis. it has the network requests for the various types of data
 import Foundation
 import KeychainAccess
+import SwiftUI
 
 
-// enum for the timeranges needed to get the data from api
-enum TimeRange: String{
-    case shortTerm = "short_term"
-    case mediumTerm = "medium_term"
-    case longTerm = "long_term"
-}
+
 
 
 class SpotifyAPIService { // swift ui classes are shared by reference, so we want to make sure states are saved vs views which are structs and they destroy and make copies on the fly
@@ -31,7 +27,7 @@ class SpotifyAPIService { // swift ui classes are shared by reference, so we wan
 }
 
 extension SpotifyAPIService{
-    func getTopArtists(timeRange: TimeRange = .mediumTerm, limit: Int = 25 ) async throws -> [Artist] {
+    func getTopArtists(timeRange: TimeRange = TimeRange.shortTerm , limit: Int = 25 ) async throws -> [Artist] {
         //these are the url components
         
         var components = URLComponents(string: "\(baseUrl)/me/top/artists")
@@ -75,7 +71,7 @@ extension SpotifyAPIService{
 // api request for getting top tracks
 extension SpotifyAPIService{
     // these are the params required to send to the server
-    func getTopTracks(timeRange: TimeRange = .mediumTerm, limit: Int = 25)  async throws -> [Tracks]{
+    func getTopTracks(timeRange: TimeRange = .shortTerm, limit: Int = 25)  async throws -> [Tracks]{
         // need to form the url string off base string, URL components helps alot with this
         var components =
         URLComponents(string: "\(baseUrl)/me/top/tracks")
