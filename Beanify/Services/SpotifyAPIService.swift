@@ -117,3 +117,7 @@ extension SpotifyAPIService{
     }
     
 }
+// get the user profile data from the api
+extension SpotifyAPIService{
+    
+}

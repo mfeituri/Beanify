@@ -4,6 +4,16 @@
 //
 //  Created by Mohamed Feituri on 9/4/25.
 //
+// file for all my api structs
+
+
+struct SpotifyUserProfile: Codable {
+    let id: String
+    let displayName: String?
+    let email: String?
+}
+
+
 struct TopArtistResponse: Codable{
     let items: [Artist]
 }
@@ -15,9 +25,11 @@ struct ExternalUrl: Codable{
     let spotify: String
     
 }
-struct Followers: Codable{
+
+struct Followers: Codable {
     let total: Int
 }
+
 struct SpotifyImage: Codable {
     let url: String
     let height: Int
@@ -49,6 +61,7 @@ struct Album: Codable{
     let name: String
     let images: [SpotifyImage]
 }
+
 
 
 //identifiable makes it easier when writing foreach loops so i dont need an id for each, it does it on its own
