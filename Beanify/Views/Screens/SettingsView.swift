@@ -7,11 +7,21 @@
 import SwiftUI
 
 struct SettingsView: View{
+    @State private var path = NavigationPath()
     var body: some View {
-        Text("settings view")
+        NavigationStack(path: $path){
+            List{
+                NavigationLink("Profile", value: "Profile")
+                NavigationLink("Another Navigation Setting", value: "random")
+            }
+            
+        }
     }
-}
-#Preview{
-    SettingsView()
-}
+    }
+    
+    
+    #Preview{
+        SettingsView()
+    }
+
 
