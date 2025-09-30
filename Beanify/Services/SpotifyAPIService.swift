@@ -117,7 +117,28 @@ extension SpotifyAPIService{
     }
     
 }
-// get the user profile data from the api
-extension SpotifyAPIService{
-    
+extension SpotifyAPIService {
+    func getCurrentUserProfile() async throws -> SpotifyUserProfile {
+        guard let url = URL(string: "\(baseUrl)/me") else {
+            throw URLError(.badURL)
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        if let token = getTokenAcess() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            throw URLError(.userAuthenticationRequired)
+        }
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let userProfile = try JSONDecoder().decode(SpotifyUserProfile.self, from: data)
+        return userProfile
+    }
 }

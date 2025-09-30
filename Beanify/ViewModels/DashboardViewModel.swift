@@ -14,9 +14,12 @@ class DashboardViewModel: ObservableObject{
     @Published var topArtists: [Artist] = []
     @Published var topTracks: [Tracks] = []
     @Published var selectedTerm: TimeRange = TimeRange.shortTerm
+   
 
     private let apiService = SpotifyAPIService()
     
+
+
     func fetchArtistData() async {
         do{
             let artists = try await apiService.getTopArtists(timeRange: selectedTerm)

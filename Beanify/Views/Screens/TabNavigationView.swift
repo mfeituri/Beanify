@@ -6,39 +6,45 @@
 //
 import SwiftUI
 
+struct TabNavigationView: View {
+    @StateObject private var dashboardVM = DashboardViewModel()
 
-struct TabNavigationView: View{
-    var body: some View{
-        TabView{
-            NavigationStack{
-                DashboardView()
-                    .navigationTitle("Dashboard")
-            }
-            .tabItem{
-                Label("Dashboard", systemImage: "chart.bar.horizontal.page.fill")
-            }
-            FavoritesView()
-                .tabItem{
-                    Label("Favorites", systemImage: "star")
-                }
-            SettingsView()
-                .tabItem{
-                    Label("Settings", systemImage: "gear")
-                }
-            ProfileView()
-                .tabItem{
-                    Label("Profile", systemImage: "person")
-                }
-                
-           
-        }
-        .toolbarBackground(.black, for: .tabBar)
-        //        .tabViewStyle(.page(indexDisplayMode: .always))
-        
-        
+    init() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithTransparentBackground()
+        tabBarAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemGreen
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
+
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
-}
 
-#Preview {
-    TabNavigationView()
+    var body: some View {
+        TabView {
+            NavigationStack {
+                DashboardView()
+                    .navigationTitle("Your Spotify Dashboard")
+            }
+            .tabItem {
+                Label("Dashboard", systemImage: "chart.bar.doc.horizontal")
+            }
+
+            // Data Tab
+            DataView(vm: DataViewModel(tracks: dashboardVM.topTracks))
+                .tabItem {
+                    Label("Data", systemImage: "chart.pie.fill")
+                }
+
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle.fill")
+                }
+        }
+        .accentColor(.green)
+        .task {
+            await dashboardVM.fetchArtistData()
+            await dashboardVM.fetchTrackData()
+        }
+    }
 }

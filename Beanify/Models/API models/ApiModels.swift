@@ -6,11 +6,28 @@
 //
 // file for all my api structs
 
+import Foundation
+import SwiftUICore
+
 
 struct SpotifyUserProfile: Codable {
     let id: String
-    let displayName: String?
+    let displayName: String
     let email: String?
+    let followers: Followers
+    let externalUrls: ExternalUrl
+    let images: [SpotifyImage]
+    let country: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
+        case email
+        case followers
+        case externalUrls = "external_urls"
+        case images
+        case country
+    }
 }
 
 
@@ -51,11 +68,21 @@ struct Artist: Codable, Identifiable {
     
 }
 
+struct PieSlice: Identifiable {
+    let id = UUID()
+    let color: Color
+    let value: Double
+    let label: String
+}
+
+
 //dont want to use the same struct as top artists since its not the same structure
-struct ArtistSimplified: Codable, Identifiable{
+struct ArtistSimplified: Codable, Identifiable {
     let id: String
     let name: String
+    let genres: [String]? // optional, may need to fetch full Artist from API
 }
+
 
 struct Album: Codable{
     let name: String
@@ -70,5 +97,15 @@ struct Tracks: Codable, Identifiable {
     let name: String
     let album: Album
     let artists: [ArtistSimplified]
+    let preview_url: String?
+    
+
+    struct PieSlice: Identifiable {
+        let id = UUID()
+        let color: Color
+        let value: Double
+        let label: String
+    }
+
     
 }

@@ -6,40 +6,57 @@
 //
 import SwiftUI
 
-struct TopTracksWidget: View{
+struct TopTracksWidget: View {
     let tracks: [Tracks]
     
     var body: some View {
-        
-        VStack{
+        VStack {
             Text("Top Tracks")
                 .frame(alignment: .center)
                 .font(.headline)
                 .padding(.bottom, 4)
+            
             ForEach(Array(tracks.enumerated()), id: \.offset) { index, track in
-                VStack(alignment: .center, spacing: 8){
+                HStack(alignment: .center, spacing: 12) {
+                    
+                    // track Index
                     Text("\(index + 1)")
-                        .lineLimit(1)
-                        .font(.headline)
-                        .foregroundColor(.white)
                         .font(.subheadline)
-                        .padding(.leading, 8)
+                        .bold()
+                        .foregroundColor(.white)
                         .frame(width: 30, alignment: .center)
-                    VStack(alignment: .leading, spacing: 2){
+                    
+                    //   shows the album cover
+                    if let albumUrl = track.album.images.first?.url, let url = URL(string: albumUrl) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } placeholder: {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 50, height: 50)
+                        }
+                    }
+                    
+                    // shows the track Info
+                    VStack(alignment: .leading, spacing: 2) {
                         Text(track.name)
                             .font(.subheadline)
                             .lineLimit(1)
+                            .foregroundColor(.white)
+                        
+                        Text(track.artists.map { $0.name }.joined(separator: ", "))
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
                     }
                     
-                    Text(track.artists.map{$0.name}.joined(separator: ", "))
-                        .foregroundColor(.gray)
-                        .font(.subheadline)
-                        .padding(.leading, 4)
-                        .frame(alignment: .center)
+                    Spacer()
                 }
-                Spacer()
+                .padding(.vertical, 4)
             }
-            .padding(.vertical, 4)
         }
     }
 }
