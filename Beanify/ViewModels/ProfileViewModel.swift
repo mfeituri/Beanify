@@ -14,10 +14,10 @@ class ProfileViewModel: ObservableObject {
     
     let keychain = Keychain(service: "com.mfeituri.beanify")
     
-    // Shared AppStorage to track login state
+
     @AppStorage("isLoggedIn") var appStorageIsLoggedIn: Bool = false
     
-    // MARK: - Logout
+    // logout
     func logout() {
         print("Logging out…") // print for debugging
         

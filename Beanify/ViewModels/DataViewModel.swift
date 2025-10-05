@@ -13,7 +13,7 @@ class DataViewModel: ObservableObject {
         calculateGenres(from: tracks)
     }
 
-    // Temporary genre simulation until real Spotify genres are fetched
+    // temporary genre simulation until real Spotify genres are fetched
     func calculateGenres(from tracks: [Tracks]) {
         var counts: [String: Int] = [:]
         let sampleGenres = ["Pop", "Rock", "Hip-Hop", "EDM", "R&B", "Indie"]

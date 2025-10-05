@@ -18,7 +18,7 @@ class LoginViewModel: ObservableObject {
     @AppStorage("isLoggedIn") var appStorageIsLoggedIn: Bool = false
     let keychain = Keychain(service: "com.mfeituri.beanify")
     
-    // MARK: - PKCE Helpers
+    // pkcee helper fx
     func generateRandomString(length: Int) -> String {
         let possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         var value = ""
@@ -39,7 +39,7 @@ class LoginViewModel: ObservableObject {
         return base64
     }
     
-    // MARK: - Login
+    // login flow
     func startLogin() {
         let codeVerifier = generateRandomString(length: 64)
         UserDefaults.standard.setValue(codeVerifier, forKey: "code_verifier")
@@ -120,7 +120,7 @@ class LoginViewModel: ObservableObject {
         }.resume()
     }
     
-    // MARK: - Fetch User Profile
+    // user profile
     func fetchUserProfile() {
         guard let token = try? keychain.get("access_token") else { return }
         guard let url = URL(string: "https://api.spotify.com/v1/me") else { return }

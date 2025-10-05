@@ -7,7 +7,7 @@
 // file for all my api structs
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 
 struct SpotifyUserProfile: Codable {
