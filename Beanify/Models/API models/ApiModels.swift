@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+// should probably split things up to be more clean or add sections here
 
 
 struct SpotifyUserProfile: Codable {
