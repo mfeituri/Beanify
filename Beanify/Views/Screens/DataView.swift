@@ -5,14 +5,6 @@
 //  Created by Mohamed Feituri on 9/20/25.
 //
 
-
-//
-//  DataView.swift
-//  Beanify
-//
-//  Created by Mohamed Feituri on 9/29/25.
-//
-
 import SwiftUI
 
 struct DataView: View {
